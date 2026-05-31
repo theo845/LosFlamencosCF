@@ -6,14 +6,44 @@
     <title>Flamencos Admin</title>
 
     <style>
-        label{
-    display:block;
-    margin-top:10px;
-    margin-bottom:5px;
-    font-size:13px;
-    color:#ff4fa3;
-    font-weight:bold;
-}
+        .easter-badge {
+            margin-top: 15px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 79, 163, 0.15);
+            border: 1px solid #ff4fa3;
+            color: #ff4fa3;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .easter-badge:hover {
+            background: #ff4fa3;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .secret-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #111;
+            border: 1px solid #ff4fa3;
+            color: white;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #ff4fa3;
+            font-weight: bold;
+        }
+
         body {
             font-family: Arial;
             background: #111;
@@ -89,6 +119,14 @@
             <textarea id="matchesList" placeholder="One match per line"></textarea>
 
             <button onclick="saveData()">Save Changes</button>
+            <div class="easter-badge" onclick="toggleSecret()">
+                🔥 Thank you Mr. Tselios!
+            </div>
+
+            <div id="secretBox" class="secret-box">
+                <h3>🏆 Secret Club Info</h3>
+                <p>You are inside the Flamencos system.</p>
+            </div>
 
         </div>
 
