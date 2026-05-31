@@ -1,155 +1,167 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Flamencos Admin</title>
+    <meta charset="UTF-8">
+    <title>Flamencos Admin</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#111;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
+    <style>
+        body {
+            font-family: Arial;
+            background: #111;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.box{
-    background:#222;
-    padding:30px;
-    border-radius:15px;
-    width:350px;
-}
+        .box {
+            background: #222;
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
+        }
 
-input, textarea{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:none;
-    border-radius:8px;
-}
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+        }
 
-button{
-    width:100%;
-    padding:12px;
-    background:#ff4fa3;
-    border:none;
-    color:white;
-    font-weight:bold;
-    border-radius:8px;
-    cursor:pointer;
-}
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff4fa3;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-button:hover{
-    background:#ff2f92;
-}
-</style>
+        button:hover {
+            background: #ff2f92;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="box">
+    <div class="box">
 
-<h2>FLAMENCOS ADMIN</h2>
+        <h2>FLAMENCOS ADMIN</h2>
 
-<!-- LOGIN -->
-<div id="loginBox">
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-</div>
+        <!-- LOGIN -->
+        <div id="loginBox">
+            <input id="email" placeholder="Email">
+            <input id="password" type="password" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
 
-<!-- PANEL -->
-<div id="panel" style="display:none;">
+        <!-- PANEL -->
+        <div id="panel" style="display:none;">
 
-    <input id="matches" placeholder="Matches">
-    <input id="wins" placeholder="Wins">
-    <input id="goals" placeholder="Goals">
+            <label>Matches</label>
+            <input id="matches" placeholder="Matches">
 
-    <textarea id="players" placeholder="Players (comma separated)"></textarea>
-    <textarea id="matchesList" placeholder="Matches (one per line)"></textarea>
+            <label>Wins</label>
+            <input id="wins" placeholder="Wins">
 
-    <button onclick="saveData()">Save Changes</button>
+            <label>Goals</label>
+            <input id="goals" placeholder="Goals">
 
-</div>
+            <label>Players</label>
+            <textarea id="players" placeholder="Nikos, Kostas, Giannis"></textarea>
 
-</div>
+            <label>Matches List</label>
+            <textarea id="matchesList" placeholder="One match per line"></textarea>
 
-<script type="module">
+            <button onclick="saveData()">Save Changes</button>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { 
-getFirestore, doc, getDoc, setDoc 
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        </div>
 
-import { 
-getAuth, signInWithEmailAndPassword 
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    </div>
 
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_ID",
-  storageBucket: "YOUR_BUCKET",
-  messagingSenderId: "YOUR_SENDER",
-  appId: "YOUR_APP"
-};
+    <script type="module">
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import {
+            getFirestore, doc, getDoc, setDoc
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// LOGIN
-window.login = async function(){
+        import {
+            getAuth, signInWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdYuyF4i0KBamoOooKkTQDgrmSB0m4bag",
+            authDomain: "flamencosfc-98c0a.firebaseapp.com",
+            projectId: "flamencosfc-98c0a",
+            storageBucket: "flamencosfc-98c0a.firebasestorage.app",
+            messagingSenderId: "754578604733",
+            appId: "1:754578604733:web:6251d04ad81942e51e2dd4",
+            measurementId: "G-B1VQ4DSX40"
+        };
 
-    await signInWithEmailAndPassword(auth, email, password);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
 
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("panel").style.display = "block";
+        // LOGIN
+        window.login = async function () {
 
-    loadData();
-};
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-// LOAD DATA
-async function loadData(){
+            await signInWithEmailAndPassword(auth, email, password);
 
-    const ref = doc(db, "club", "main");
-    const snap = await getDoc(ref);
+            document.getElementById("loginBox").style.display = "none";
+            document.getElementById("panel").style.display = "block";
 
-    if(!snap.exists()) return;
+            loadData();
+        };
 
-    const data = snap.data();
+        // LOAD DATA
+        async function loadData() {
 
-    document.getElementById("matches").value = data.matches;
-    document.getElementById("wins").value = data.wins;
-    document.getElementById("goals").value = data.goals;
+            const ref = doc(db, "club", "main");
+            const snap = await getDoc(ref);
 
-    document.getElementById("players").value = data.players.join(",");
-    document.getElementById("matchesList").value = data.matchesList.join("\n");
-}
+            if (!snap.exists()) return;
 
-// SAVE DATA
-window.saveData = async function(){
+            const data = snap.data();
 
-    const ref = doc(db, "club", "main");
+            document.getElementById("matches").value = data.matches;
+            document.getElementById("wins").value = data.wins;
+            document.getElementById("goals").value = data.goals;
 
-    await setDoc(ref, {
-        matches: Number(document.getElementById("matches").value),
-        wins: Number(document.getElementById("wins").value),
-        goals: Number(document.getElementById("goals").value),
+            document.getElementById("players").value = data.players.join(",");
+            document.getElementById("matchesList").value = data.matchesList.join("\n");
+        }
 
-        players: document.getElementById("players").value.split(","),
-        matchesList: document.getElementById("matchesList").value.split("\n")
-    });
+        // SAVE DATA
+        window.saveData = async function () {
 
-    alert("Saved successfully!");
-};
+            const ref = doc(db, "club", "main");
 
-</script>
+            await setDoc(ref, {
+                matches: Number(document.getElementById("matches").value),
+                wins: Number(document.getElementById("wins").value),
+                goals: Number(document.getElementById("goals").value),
+
+                players: document.getElementById("players").value.split(","),
+                matchesList: document.getElementById("matchesList").value.split("\n")
+            });
+
+            alert("Saved successfully!");
+        };
+
+    </script>
 
 </body>
+
 </html>
